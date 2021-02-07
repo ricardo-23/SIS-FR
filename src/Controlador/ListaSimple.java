@@ -5,6 +5,8 @@
  */
 package Controlador;
 
+import static java.lang.System.out;
+
 
 
 /**
@@ -33,7 +35,7 @@ public class ListaSimple {
      * @param dato de tipo Object
      */  
     public void insertar(Object dato){
-        Nodo temporal = new Nodo(dato, null);
+        var temporal = new Nodo(dato, null);
         temporal.setSiguiente(cabecera);
         cabecera = temporal; 
     }
@@ -44,14 +46,14 @@ public class ListaSimple {
      */     
     public void imprimir(){
         if(!estaVacia()){
-            Nodo temporal = cabecera;
+            var temporal = cabecera;
             while(temporal != null){
-                System.out.println("-- "+temporal.getDato()+" --");
+                out.println("-- "+temporal.getDato()+" --");
                 temporal = temporal.getSiguiente();
             }
             
         }else{
-            System.out.println("La lista se encuentra vacia");
+            out.println("La lista se encuentra vacia");
         }
     }
     
@@ -63,8 +65,8 @@ public class ListaSimple {
     public Object verDatoPosicion(int pos){
         Object dato = null;
         if(!estaVacia() && pos >= 0){
-            Nodo temporal = cabecera;
-            for (int i = 0; i < pos; i++) {
+            var temporal = cabecera;
+            for (var i = 0; i < pos; i++) {
                 temporal = temporal.getSiguiente();
                 if(temporal == null){
                     break;

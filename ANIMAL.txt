@@ -1,0 +1,5 @@
+b,b,b,extensivo,Gato,6.0,6.0,6.0,6.0,b,6.0
+b,b,b,intensivo,Ave,3.0,3.0,3.0,3.0,b,33.0
+w,w,w,semi intensivo,Ave,1.0,1.0,1.0,1.0,w,1.0
+a,b,b,semi intensivo ,Gato,2.0,2.0,2.0,2.0,b,2.0
+

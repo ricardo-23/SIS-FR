@@ -6,7 +6,14 @@
 package Vista;
 
 import Controlador.ControlRegistroAlimento;
+import static java.awt.EventQueue.invokeLater;
+import static java.lang.Double.parseDouble;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.UIManager.getInstalledLookAndFeels;
+import static javax.swing.UIManager.setLookAndFeel;
 
 /**
  *
@@ -18,14 +25,17 @@ public class RegistrarAlimentos extends javax.swing.JFrame {
      * Creates new form RegistrarAlimentos
      */
     ControlRegistroAlimento control = new ControlRegistroAlimento();
+
     public RegistrarAlimentos() {
         initComponents();
+        control.CargarDatos();
         limpiar();
     }
+
     /**
      * limpia todos los txtField de la ventana
      */
-    private void limpiar(){
+    private void limpiar() {
         txtNombreComun.setText("");
         txtVariedadTipo.setText("");
         txtParte.setText("");
@@ -38,6 +48,7 @@ public class RegistrarAlimentos extends javax.swing.JFrame {
         txtFosforo.setText("");
         txtCalcio.setText("");
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,7 +61,7 @@ public class RegistrarAlimentos extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        ComboBoxTipoAlimento = new javax.swing.JComboBox<String>();
+        ComboBoxTipoAlimento = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         txtCosto = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -88,7 +99,7 @@ public class RegistrarAlimentos extends javax.swing.JFrame {
 
         jLabel2.setText("Tipo de Alimento:");
 
-        ComboBoxTipoAlimento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Energético", "Proteico", "Forraje Verde", "Forraje Seco", "Ensilaje", "Mineral", "Vitamina", "Aditivo" }));
+        ComboBoxTipoAlimento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Energético", "Proteico", "Forraje Verde", "Forraje Seco", "Ensilaje", "Mineral", "Vitamina", "Aditivo" }));
 
         jLabel3.setText("Costo $/Kg.");
 
@@ -259,6 +270,11 @@ public class RegistrarAlimentos extends javax.swing.JFrame {
         );
 
         jButton3.setText("Atras");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Registrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -325,26 +341,28 @@ public class RegistrarAlimentos extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            control.getRegistroAlimento().setCalcio(Double.parseDouble(txtCalcio.getText()));
+            control.getRegistroAlimento().setCalcio(parseDouble(txtCalcio.getText()));
             control.getRegistroAlimento().setCalidad(txtCalidad.getText());
-            control.getRegistroAlimento().setCostoKg(Double.parseDouble(txtCosto.getText()));
-            control.getRegistroAlimento().setEnergiaMetabolizable(Double.parseDouble(txtEnergiaMetabolizable.getText()));
-            control.getRegistroAlimento().setFosforo(Double.parseDouble(txtFosforo.getText()));
-            control.getRegistroAlimento().setLisina(Double.parseDouble(txtLisina.getText()));
+            control.getRegistroAlimento().setCostoKg(parseDouble(txtCosto.getText()));
+            control.getRegistroAlimento().setEnergiaMetabolizable(parseDouble(txtEnergiaMetabolizable.getText()));
+            control.getRegistroAlimento().setFosforo(parseDouble(txtFosforo.getText()));
+            control.getRegistroAlimento().setLisina(parseDouble(txtLisina.getText()));
             control.getRegistroAlimento().setNombre(txtNombreComun.getText());
             control.getRegistroAlimento().setOrigen(ComboBoxOrigen.getSelectedItem().toString());
             control.getRegistroAlimento().setParte(txtParte.getText());
             control.getRegistroAlimento().setProceso(txtProceso.getText());
-            control.getRegistroAlimento().setProteinaC(Double.parseDouble(txtProteinaC.getText()));
+            control.getRegistroAlimento().setProteinaC(parseDouble(txtProteinaC.getText()));
             control.getRegistroAlimento().setTipo(txtVariedadTipo.getText());
             control.getRegistroAlimento().setTipoAlimento(ComboBoxTipoAlimento.getSelectedItem().toString());
-            if(control.guardarRegistroAlimento()){
-                JOptionPane.showMessageDialog(null, "guardado");
-            }else{
-                JOptionPane.showMessageDialog(null, "Error al guardar");
+            if (control.guardarRegistroAlimento()) {
+                limpiar();
+                control.InsertarArchivo();
+                showMessageDialog(null, "guardado");
+            } else {
+                showMessageDialog(null, "Error al guardar");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error");
+            showMessageDialog(null, "Error");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -353,9 +371,16 @@ public class RegistrarAlimentos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreComunActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        control.presentar();
+        control.CargarDatosPorBusqueda(txtNombreComun.getText());
+        System.out.println(control.getListabusqueda().tamano());
         limpiar();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        var form = new FrmPrincipalA();
+        form.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -367,29 +392,24 @@ public class RegistrarAlimentos extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (var info : getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistrarAlimentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistrarAlimentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistrarAlimentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistrarAlimentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            getLogger(RegistrarAlimentos.class.getName()).log(SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
 
+        //</editor-fold>
+        //</editor-fold>
+
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistrarAlimentos().setVisible(true);
-            }
+        invokeLater(() -> {
+            new RegistrarAlimentos().setVisible(true);
         });
     }
 

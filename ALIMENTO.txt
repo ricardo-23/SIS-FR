@@ -1,0 +1,2 @@
+a,a,a,a,a,vegetal,Energético,1.0,1.0,1.0,1.0,1.0,1.0
+

@@ -6,6 +6,7 @@
 package Controlador;
 
 
+import static java.lang.System.out;
 import java.util.Arrays;
 
 
@@ -24,9 +25,9 @@ public class ListaSimpleAvanzada extends ListaSimple {
      * @return int Retorna el tamaño de la lista
      */
     public int tamano() {
-        int tamano = 0;
+        var tamano = 0;
         if (!estaVacia()) {
-            Nodo temporal = cabecera;
+            var temporal = cabecera;
             while (temporal != null) {
                 tamano++;
                 temporal = temporal.getSiguiente();
@@ -44,6 +45,22 @@ public class ListaSimpleAvanzada extends ListaSimple {
         if (estaVacia() || pos <= 0) {
             insertar(dato);
         } else {
+            var iterador = this.cabecera;
+            for (var i = 0; i < pos; i++) {
+                if (iterador.getSiguiente() == null) {
+                    break;
+                }
+                iterador = iterador.getSiguiente();
+            }
+            var temporal = new Nodo(dato, iterador.getSiguiente());
+            iterador.setSiguiente(temporal);
+        }
+    }
+    
+     public void insertarPos(Object dato, int pos) {
+        if (estaVacia() || pos <= 0) {
+            insertar(dato);
+        } else {
             Nodo iterador = this.cabecera;
             for (int i = 0; i < pos; i++) {
                 if (iterador.getSiguiente() == null) {
@@ -56,11 +73,38 @@ public class ListaSimpleAvanzada extends ListaSimple {
         }
     }
 
+    public void insertarFinal(Object dato) {
+        insertarPos(dato, tamano());
+    }
+
     /**
      * Sirve para eliminar un dato en una posicion especifica.
      * @param pos de tipo int.
      */ 
     public void eliminarPorPosicion(int pos) {
+        if (!estaVacia()) {
+            if (pos < 0) {
+                out.println("Debe ser una posicion mayor a cero");
+            } else {
+                if (pos == 0) {
+                    cabecera = cabecera.getSiguiente();
+                } else if (pos <= (tamano() - 1)) {
+                    var aux = cabecera;
+                    for (var i = 0; i < pos-1; i++) {
+                        aux = aux.getSiguiente();
+                    }
+                    var siguiente = aux.getSiguiente();
+                    aux.setSiguiente(siguiente.getSiguiente());
+                } else {
+                    out.println("No se elimino");
+                }
+            }
+        } else {
+            out.println("Lista vacia");
+        }
+    }
+    
+    public void eliminarPorPosicionOtro(int pos) {
         if (!estaVacia()) {
             if (pos < 0) {
                 System.out.println("Debe ser una posicion mayor a cero");
@@ -92,14 +136,37 @@ public class ListaSimpleAvanzada extends ListaSimple {
             if(posicion == 0){
                 cabecera.setDato(dato);
             }else{
-                Nodo aux = cabecera;
-                for(int i = 0 ; i < posicion ; i++){
+                var aux = cabecera;
+                for(var i = 0 ; i < posicion ; i++){
                     aux = aux.getSiguiente();
                 }
                 aux.setDato(dato);
             }
         }else{
-            System.out.println("Fuera de Rango");
+            out.println("Fuera de Rango");
         }
+    }
+    
+    public Object obtenerPorPosicion(int pos) {
+        Object aux = null;
+        if (estaVacia() || pos < 0) {
+            out.println("Vacio");
+            //aux = verDatoPosicion(pos);
+        } else if (pos > (tamano() - 1)) {
+            out.println("El numero esta fuera de rango");
+        } else if (pos == 0) {
+            aux = verDatoPosicion(pos);
+        } else {
+            var iterador = cabecera;
+            for (var i = 1; i < pos; i++) {
+                if (iterador.getSiguiente().getSiguiente() == null) {
+                    break;
+                } else {
+                    iterador = iterador.getSiguiente();
+                }
+            }
+            aux = iterador.getSiguiente().getDato();
+        }
+        return aux;
     }
 }

@@ -5,6 +5,17 @@
  */
 package Vista;
 
+import static java.awt.EventQueue.invokeLater;
+import static java.lang.System.exit;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
+import static javax.swing.UIManager.getInstalledLookAndFeels;
+import static javax.swing.UIManager.setLookAndFeel;
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author ricar
@@ -16,6 +27,10 @@ public class FrmPrincipalA extends javax.swing.JFrame {
      */
     public FrmPrincipalA() {
         initComponents();
+        this.getContentPane().setBackground(Color.BLACK);
+        ImageIcon Bienvenido = new ImageIcon(getClass().getResource("/Imagenes/Imagen.jpg"));
+        Icon fondoBienvenido = new ImageIcon(Bienvenido.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
+        Imagen.setIcon(fondoBienvenido);
     }
 
     /**
@@ -29,12 +44,12 @@ public class FrmPrincipalA extends javax.swing.JFrame {
 
         jMenu3 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnTAlimentos = new javax.swing.JButton();
         btnTAlnimales = new javax.swing.JButton();
         btnTlRaciones = new javax.swing.JButton();
         btnTUsuarios = new javax.swing.JButton();
+        Imagen = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnCerrarSesion = new javax.swing.JMenuItem();
@@ -49,13 +64,12 @@ public class FrmPrincipalA extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulario Principal - Sistema de Formulación de Raciones");
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
-        jLabel1.setText("Bienvenido");
-
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Trajan Pro", 1, 37)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Sistema De Fomulación de Raciones");
 
         btnTAlimentos.setText("Tabla de Alimentos");
+        btnTAlimentos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 2));
         btnTAlimentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTAlimentosActionPerformed(evt);
@@ -63,6 +77,7 @@ public class FrmPrincipalA extends javax.swing.JFrame {
         });
 
         btnTAlnimales.setText("Tabla de Animales");
+        btnTAlnimales.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 2));
         btnTAlnimales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTAlnimalesActionPerformed(evt);
@@ -70,6 +85,7 @@ public class FrmPrincipalA extends javax.swing.JFrame {
         });
 
         btnTlRaciones.setText("Análisis de Raciones");
+        btnTlRaciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 2));
         btnTlRaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTlRacionesActionPerformed(evt);
@@ -77,6 +93,7 @@ public class FrmPrincipalA extends javax.swing.JFrame {
         });
 
         btnTUsuarios.setText("Tabla de Usuarios");
+        btnTUsuarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 2));
         btnTUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTUsuariosActionPerformed(evt);
@@ -87,40 +104,38 @@ public class FrmPrincipalA extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(208, 208, 208))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(40, 40, 40)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btnTAlimentos)
-                        .addGap(71, 71, 71)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnTAlnimales)
-                                .addGap(71, 71, 71)
-                                .addComponent(btnTlRaciones)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnTUsuarios)
-                                .addGap(28, 28, 28)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnTAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75)
+                        .addComponent(btnTAlnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75)
+                        .addComponent(btnTlRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(35, 35, 35)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
+                .addComponent(Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTAlimentos)
-                    .addComponent(btnTAlnimales)
-                    .addComponent(btnTlRaciones)
-                    .addComponent(btnTUsuarios))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(btnTAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTAlnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTlRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jMenu1.setText("Opciones");
@@ -188,53 +203,53 @@ public class FrmPrincipalA extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTAlimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTAlimentosActionPerformed
-        FrmAlimentos form = new FrmAlimentos();
+        var form = new FrmAlimentos();
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTAlimentosActionPerformed
 
     private void btnRegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarUsuarioActionPerformed
-        RegistrarUsuarios form = new RegistrarUsuarios();
+        var form = new RegistrarUsuarios();
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegistrarUsuarioActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-        Login form = new Login();
+        var form = new Login();
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        System.exit(0);
+        exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRegistrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAnimalActionPerformed
-       RegistrarAnimales form = new RegistrarAnimales();
+       var form = new RegistrarAnimales();
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegistrarAnimalActionPerformed
 
     private void btnRegistrarAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAlimentoActionPerformed
-        RegistrarAlimentos form = new RegistrarAlimentos();
+        var form = new RegistrarAlimentos();
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegistrarAlimentoActionPerformed
 
     private void btnTAlnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTAlnimalesActionPerformed
-        FrmAnimales form = new FrmAnimales();
+        var form = new FrmAnimales();
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTAlnimalesActionPerformed
 
     private void btnTlRacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTlRacionesActionPerformed
-        FrmRaciones form = new FrmRaciones();
+        var form = new FrmRaciones();
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTlRacionesActionPerformed
 
     private void btnTUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTUsuariosActionPerformed
-        FrmUsuarios form = new FrmUsuarios();
+        var form = new FrmUsuarios();
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTUsuariosActionPerformed
@@ -249,35 +264,33 @@ public class FrmPrincipalA extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (var info : getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipalA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipalA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipalA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipalA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            getLogger(FrmPrincipalA.class.getName()).log(SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmPrincipalA().setVisible(true);
-            }
+        invokeLater(() -> {
+            new FrmPrincipalA().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Imagen;
     private javax.swing.JMenuItem btnCerrarSesion;
     private javax.swing.JMenuItem btnRegistrarAlimento;
     private javax.swing.JMenuItem btnRegistrarAnimal;
@@ -287,7 +300,6 @@ public class FrmPrincipalA extends javax.swing.JFrame {
     private javax.swing.JButton btnTAlnimales;
     private javax.swing.JButton btnTUsuarios;
     private javax.swing.JButton btnTlRaciones;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

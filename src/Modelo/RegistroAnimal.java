@@ -10,17 +10,37 @@ package Modelo;
  * @author josue
  */
 public class RegistroAnimal {
+
     private String nombre;
     private String raza;
     private String etapa;
-    private String productoFinal;
     private String origen;
     private String tipo;
-    private double energiaMetabolizable;
-    private double proteinaC;
-    private double lisina;
-    private double fosforo;
     private double calcio;
+    private double energiaMetabolizable;
+    private double fosforo;
+    private double lisina;
+    private String productoFinal;
+    private double proteinaC;
+
+    public RegistroAnimal() {
+    }
+
+    public RegistroAnimal(String nombre, String raza, String etapa, String origen, String tipo, double calcio, double energiaMetabolizable, double fosforo, double lisina, String productoFinal, double proteinaC) {
+        this.nombre = nombre;
+        this.raza = raza;
+        this.etapa = etapa;
+        this.origen = origen;
+        this.tipo = tipo;
+        this.calcio = calcio;
+        this.energiaMetabolizable = energiaMetabolizable;
+        this.fosforo = fosforo;
+        this.lisina = lisina;
+        this.productoFinal = productoFinal;
+        this.proteinaC = proteinaC;
+    }
+
+
 
     public String getNombre() {
         return nombre;
@@ -45,7 +65,6 @@ public class RegistroAnimal {
     public void setEtapa(String etapa) {
         this.etapa = etapa;
     }
-
 
     public String getProductoFinal() {
         return productoFinal;
@@ -110,5 +129,5 @@ public class RegistroAnimal {
     public void setCalcio(double calcio) {
         this.calcio = calcio;
     }
-    
+
 }

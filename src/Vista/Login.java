@@ -8,7 +8,18 @@ package Vista;
 import Controlador.ControladorUsuario;
 import Controlador.Seguridad;
 import Modelo.Usuario;
+import java.awt.Color;
+import static java.awt.EventQueue.invokeLater;
+import java.awt.Image;
+import static java.lang.System.exit;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.UIManager.getInstalledLookAndFeels;
+import static javax.swing.UIManager.setLookAndFeel;
 
 /**
  *
@@ -24,6 +35,11 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         cu.CargarDatos();
+        this.getContentPane().setBackground(Color.DARK_GRAY);
+//        ImageIcon TituloLogin = new ImageIcon(getClass().getResource("/Imagenes/login.png"));
+//        Icon fondoTituloLogin = new ImageIcon(TituloLogin.getImage().getScaledInstance(Login.getWidth(), Login.getHeight(), Image.SCALE_DEFAULT));
+//        Login.setIcon(fondoTituloLogin);
+
     }
 
     /**
@@ -31,20 +47,20 @@ public class Login extends javax.swing.JFrame {
     * @return void No retorna ningún valor.
     */
     public void ingresarSistema() {
-        boolean verif = false;
-        Seguridad seguridad = new Seguridad();
+        var verif = false;
+        var seguridad = new Seguridad();
         Usuario aux;
-        for (int i = 0; i < cu.getLista().tamano(); i++) {
+        for (var i = 0; i < cu.getLista().tamano(); i++) {
             aux = (Usuario) cu.getLista().verDatoPosicion(i);
             if (aux.getNombre().equals(txtUsuario.getText()) && (aux.getClave()).equals(seguridad.Encriptar(txtClave.getText()))) {
-                FrmPrincipalA form = new FrmPrincipalA();
+                var form = new FrmPrincipalA();
                 form.setVisible(true);
                 this.dispose();
-                verif = true;
+                verif = true;               
             }
         }
         if (verif == false) {
-            JOptionPane.showMessageDialog(null, "Error: Los dato/s ingresados son incorrectos");
+            showMessageDialog(null, "Error: Los dato/s ingresados son incorrectos");
             this.txtUsuario.setText("");
             this.txtClave.setText("");
         }
@@ -61,7 +77,6 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -70,12 +85,10 @@ public class Login extends javax.swing.JFrame {
         btnIngresar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        Login = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login - Sistema de Formulación de Raciones");
-
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
-        jLabel1.setText("Login");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
 
@@ -138,9 +151,6 @@ public class Login extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(btnIngresar)
                         .addGap(18, 18, 18)
@@ -148,12 +158,16 @@ public class Login extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnSalir)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(102, 102, 102))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+                .addGap(24, 24, 24)
+                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
@@ -161,7 +175,7 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(btnIngresar)
                     .addComponent(btnCancelar)
                     .addComponent(btnSalir))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -183,7 +197,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-       System.exit(0);
+        exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
@@ -196,36 +210,30 @@ public class Login extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (var info : getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            getLogger(Login.class.getName()).log(SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
+        invokeLater(() -> {
+            new Login().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Login;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

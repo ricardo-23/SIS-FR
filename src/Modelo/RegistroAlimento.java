@@ -25,6 +25,25 @@ public class RegistroAlimento {
     private double fosforo;
     private double calcio;
 
+    public RegistroAlimento() {
+    }
+
+    public RegistroAlimento(String nombre, String tipo, String parte, String proceso, String calidad, String origen, String tipoAlimento, double costoKg, double energiaMetabolizable, double proteinaC, double lisina, double fosforo, double calcio) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.parte = parte;
+        this.proceso = proceso;
+        this.calidad = calidad;
+        this.origen = origen;
+        this.tipoAlimento = tipoAlimento;
+        this.costoKg = costoKg;
+        this.energiaMetabolizable = energiaMetabolizable;
+        this.proteinaC = proteinaC;
+        this.lisina = lisina;
+        this.fosforo = fosforo;
+        this.calcio = calcio;
+    }
+
     public String getNombre() {
         return nombre;
     }

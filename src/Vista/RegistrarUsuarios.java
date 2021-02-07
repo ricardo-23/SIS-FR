@@ -5,13 +5,16 @@
  */
 package Vista;
 
-import Controlador.ControladorUsuario;
-import Modelo.Usuario;
+import Controlador.*;
+import java.awt.Color;
+import static java.awt.EventQueue.invokeLater;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.UIManager.getInstalledLookAndFeels;
+import static javax.swing.UIManager.setLookAndFeel;
 
 /**
  *
@@ -20,39 +23,87 @@ import javax.swing.JOptionPane;
 public class RegistrarUsuarios extends javax.swing.JFrame {
 
     private ControladorUsuario cu = new ControladorUsuario();
+    private Seguridad seguro = new Seguridad();
+    String nom = "";
+    String cla = "";
+
     /**
      * Creates new form RegistrarUsuarios
      */
-    public RegistrarUsuarios() {
+    public RegistrarUsuarios(){
         initComponents();
-        limpiar();    
+        cu.CargarDatos();
+        this.getContentPane().setBackground(Color.DARK_GRAY);
     }
-    
+    /**
+     * Creates new form RegistrarUsuarios
+     */
+    public RegistrarUsuarios(String nombre, String clave) {
+        initComponents();
+        nom = nombre;
+        cla = clave;
+        cu.CargarDatos();
+
+        limpiar();
+
+    }
+
+    /**
+     * Este metodo se usa para limpiar todos los campos de texto.
+     *
+     * @return void No retorna ningún valor.
+     */
+    public void extraer() {
+        nom = this.txtNombre.getText();
+        cla = this.txtClave.getText();
+    }
     /**
     * Este metodo se usa para limpiar todos los campos de texto.
     * @return void No retorna ningún valor.
     */
-    public void limpiar(){
+    public void limpiar() {
         this.txtClave.setText("");
         this.txtNombre.setText("");
     }
-    
+
     /**
-    * Este metodo se usa para el boton registrar, es decir cada que se registre un usuario se guardara en un archivo de texto.
-    * @return void No retorna ningún valor.
-    */
+     * Este metodo se usa para el boton registrar, es decir cada que se registre
+     * un usuario se guardara en un archivo de texto.
+     *
+     * @return void No retorna ningún valor.
+     */
     private void guardar() {
-                cu.setUsuarios(null);
-                cu.getUsuarios().setNombre(txtNombre.getText());
-                cu.getUsuarios().setClave(txtClave.getText());
-                if (cu.guardarUsuario()) {
-                    cu.InsertarArchivo();
-                    limpiar();
-                    JOptionPane.showMessageDialog(null, "Se ha guardado exitosamrnte");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error: No se pudo guardar");
-                }
+        cu.setUsuarios(null);
+        cu.getUsuarios().setNombre(txtNombre.getText());
+        cu.getUsuarios().setClave(txtClave.getText());
+        //cu.Busqueda(nom, cla);
+//                if(cu.Busqueda(nom, cla)){
+//                    cu.InsertarArchivoOtro();
+//                    cu.CargarDatosOtro();
+//                }
+        if (!cu.Busqueda(nom, cla)) {
+           // showMessageDialog(null, "NO LO ENCONTRO");
+            if (cu.guardarUsuario()) {
+//                    if((cu.Busqueda(nom, cla))==false){
+                cu.InsertarArchivo();
+                limpiar();
+//                    }else{
+//                        showMessageDialog(null, "ERROR");
+//                    }
+                showMessageDialog(null, "Se ha guardado exitosamrnte");
+            } else {
+                showMessageDialog(null, "Error: No se pudo guardar");
+            }
+        }else{
+            //showMessageDialog(null, "SI LO ENCONTRO");
+            File FficheroNuevo=new File("USUARIOS.txt");
+            cu.ModificarFichero(FficheroNuevo,(nom+","+cla), (txtNombre.getText())+","+(seguro.Encriptar(txtClave.getText())));
+            cu.eliminarContenidoArchivo();
+            limpiar();
+        }
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -173,11 +224,10 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         guardar();
-        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-        FrmPrincipalA form = new FrmPrincipalA();
+        var form = new FrmPrincipalA();
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
@@ -192,28 +242,22 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (var info : getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            getLogger(RegistrarUsuarios.class.getName()).log(SEVERE, null, ex);
         }
         //</editor-fold>
 
+        //</editor-fold>
+
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistrarUsuarios().setVisible(true);
-            }
+        invokeLater(() -> {
+            new RegistrarUsuarios().setVisible(true);
         });
     }
 
@@ -225,7 +269,7 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField txtClave;
-    private javax.swing.JTextField txtNombre;
+    public javax.swing.JPasswordField txtClave;
+    public javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

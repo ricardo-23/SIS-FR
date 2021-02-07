@@ -5,6 +5,9 @@
  */
 package Controlador;
 
+import static java.lang.String.valueOf;
+import static java.lang.String.valueOf;
+
 /**
  *
  * @author ricar
@@ -16,11 +19,11 @@ public class Seguridad {
     * @return String Retorna una cadena donde se encuentre la clave encriptada.
     */
     public String Encriptar (String clave){
-        char array[]=clave.toCharArray();
-        for(int i=0;i<array.length;i++){
+        var array=clave.toCharArray();
+        for(var i=0;i<array.length;i++){
             array[i]=(char)(array[i]+(char)((7*i)+(3*(i+1))));
         }
-        String encriptado=String.valueOf(array);
+        var encriptado=valueOf(array);
         return encriptado;
     }
     
@@ -30,11 +33,11 @@ public class Seguridad {
     * @return String Retorna una cadena donde se encuentre la clave desencriptada.
     */
     public String Desencriptar (String clave){
-        char array[]=clave.toCharArray();
-        for(int i=0;i<array.length;i++){
+        var array=clave.toCharArray();
+        for(var i=0;i<array.length;i++){
             array[i]=(char)(array[i]-(char)((7*i)+(3*(i+1))));
         }
-        String desencriptado=String.valueOf(array);
+        var desencriptado=valueOf(array);
         return desencriptado;
     }
 }

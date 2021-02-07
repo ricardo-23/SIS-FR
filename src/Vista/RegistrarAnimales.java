@@ -6,7 +6,14 @@
 package Vista;
 
 import Controlador.ControlRegistroAnimal;
+import static java.awt.EventQueue.invokeLater;
+import static java.lang.Double.parseDouble;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.UIManager.getInstalledLookAndFeels;
+import static javax.swing.UIManager.setLookAndFeel;
 
 /**
  *
@@ -20,6 +27,7 @@ public class RegistrarAnimales extends javax.swing.JFrame {
     ControlRegistroAnimal control = new ControlRegistroAnimal();
     public RegistrarAnimales() {
         initComponents();
+        control.CargarDatos();
         limpiar();
     }
      /**
@@ -49,7 +57,7 @@ public class RegistrarAnimales extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        comboboxTipoAnimal = new javax.swing.JComboBox<String>();
+        comboboxTipoAnimal = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -74,7 +82,6 @@ public class RegistrarAnimales extends javax.swing.JFrame {
         botonRegistrar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -94,7 +101,7 @@ public class RegistrarAnimales extends javax.swing.JFrame {
 
         jLabel2.setText("Tipo de Animal:");
 
-        comboboxTipoAnimal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ave", "Cerdo", "Caballo", "Perro", "Gato", "Roedor", "Pez", "Otro" }));
+        comboboxTipoAnimal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ave", "Cerdo", "Caballo", "Perro", "Gato", "Roedor", "Pez", "Otro" }));
 
         jLabel5.setText("Energia Metabolizable:");
 
@@ -118,7 +125,12 @@ public class RegistrarAnimales extends javax.swing.JFrame {
 
         jLabel39.setText("Origen:");
 
-        comboboxOrigen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "intensivo", "semi intensivo ", "extensivo" }));
+        comboboxOrigen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "intensivo", "semi intensivo", "extensivo" }));
+        comboboxOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboboxOrigenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -254,11 +266,9 @@ public class RegistrarAnimales extends javax.swing.JFrame {
         jButton2.setText("Cancelar");
 
         jButton3.setText("Atras");
-
-        jButton1.setText("presentar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -267,32 +277,27 @@ public class RegistrarAnimales extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(botonRegistrar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(38, 38, 38)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addGap(135, 135, 135)
+                .addComponent(botonRegistrar)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 50, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(33, 33, 33)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonRegistrar)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1))
+                    .addComponent(jButton3))
                 .addContainerGap())
         );
 
@@ -316,32 +321,39 @@ public class RegistrarAnimales extends javax.swing.JFrame {
 
     private void botonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarActionPerformed
         try {
-            control.getRegistroAnimal().setCalcio(Double.parseDouble(txtCalcio.getText()));
-            control.getRegistroAnimal().setEnergiaMetabolizable(Double.parseDouble(txtEnergiaMetabolizable.getText()));
+            control.getRegistroAnimal().setCalcio(parseDouble(txtCalcio.getText()));
+            control.getRegistroAnimal().setEnergiaMetabolizable(parseDouble(txtEnergiaMetabolizable.getText()));
             control.getRegistroAnimal().setEtapa(txtEtapa.getText());
-            control.getRegistroAnimal().setFosforo(Double.parseDouble(txtFosforo.getText()));
-            control.getRegistroAnimal().setLisina(Double.parseDouble(txtLisina.getText()));
+            control.getRegistroAnimal().setFosforo(parseDouble(txtFosforo.getText()));
+            control.getRegistroAnimal().setLisina(parseDouble(txtLisina.getText()));
             control.getRegistroAnimal().setNombre(txtNombreComun.getText());
             control.getRegistroAnimal().setOrigen(comboboxOrigen.getSelectedItem().toString());
             control.getRegistroAnimal().setProductoFinal(txtProductoFinal.getText());
-            control.getRegistroAnimal().setProteinaC(Double.parseDouble(txtProteinaC.getText()));
+            control.getRegistroAnimal().setProteinaC(parseDouble(txtProteinaC.getText()));
             control.getRegistroAnimal().setRaza(txtRaza.getText());
             control.getRegistroAnimal().setTipo(comboboxTipoAnimal.getSelectedItem().toString());
             if(control.guardarRegistroAnimal()){
-                JOptionPane.showMessageDialog(null, "guardado");
+                control.InsertarArchivo();
+                showMessageDialog(null, "guardado");
+                limpiar();
             }else{
-                JOptionPane.showMessageDialog(null, "No se guardo");
+                showMessageDialog(null, "No se guardo");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error");
+            showMessageDialog(null, "Error");
         }
        
     }//GEN-LAST:event_botonRegistrarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       control.Presentar();
-       limpiar();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+             var form = new FrmPrincipalA();
+        form.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void comboboxOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxOrigenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboboxOrigenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -353,29 +365,24 @@ public class RegistrarAnimales extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (var info : getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistrarAnimales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistrarAnimales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistrarAnimales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistrarAnimales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            getLogger(RegistrarAnimales.class.getName()).log(SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistrarAnimales().setVisible(true);
-            }
+        invokeLater(() -> {
+            new RegistrarAnimales().setVisible(true);
         });
     }
 
@@ -383,7 +390,6 @@ public class RegistrarAnimales extends javax.swing.JFrame {
     private javax.swing.JButton botonRegistrar;
     private javax.swing.JComboBox comboboxOrigen;
     private javax.swing.JComboBox<String> comboboxTipoAnimal;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
