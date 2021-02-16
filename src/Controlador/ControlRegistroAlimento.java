@@ -172,7 +172,7 @@ public class ControlRegistroAlimento {
                     var aux11 = ST.nextToken();
                     var aux12 = ST.nextToken();
                     var aux13 = ST.nextToken();
-                   lista.insertar(new RegistroAlimento(aux1, aux2, aux3, aux4, aux5, aux6, aux7, Double.parseDouble(aux8),
+                   lista.insertarFinal(new RegistroAlimento(aux1, aux2, aux3, aux4, aux5, aux6, aux7, Double.parseDouble(aux8),
                            Double.parseDouble(aux9), Double.parseDouble(aux10), Double.parseDouble(aux11), Double.parseDouble(aux12),
                            Double.parseDouble(aux13)));
                     //}

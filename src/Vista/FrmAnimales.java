@@ -5,11 +5,18 @@
  */
 package Vista;
 
+import Controlador.ControlRaciones;
 import Controlador.ControlRegistroAnimal;
+import Modelo.RegistroAnimal;
 import Vista.Tablas.TablaAnimal;
+import java.awt.Color;
 import static java.awt.EventQueue.invokeLater;
+import java.awt.Image;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import static javax.swing.UIManager.getInstalledLookAndFeels;
 import static javax.swing.UIManager.setLookAndFeel;
 
@@ -24,30 +31,94 @@ public class FrmAnimales extends javax.swing.JFrame {
      */
     private ControlRegistroAnimal control = new ControlRegistroAnimal();
     private TablaAnimal modelo = new TablaAnimal();
+    private ControlRaciones controlRac = new ControlRaciones();
+
     public FrmAnimales() {
         initComponents();
         control.CargarDatos();
+        limpiar();
         cargarTabla();
+        txtBuscar.requestFocus();
+        Botones(false);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+        this.setResizable(false);
+        this.getContentPane().setBackground(Color.DARK_GRAY);
+        jPanel1.setBackground(Color.DARK_GRAY);
+        jPanel2.setBackground(Color.DARK_GRAY);
+        jPanel3.setBackground(Color.DARK_GRAY);
+        ImageIcon JLupa = new ImageIcon(getClass().getResource("/Vista/Imagenes/Lupa.png"));
+        Icon fondoJLupa = new ImageIcon(JLupa.getImage().getScaledInstance(Lupa.getWidth(), Lupa.getHeight(), Image.SCALE_DEFAULT));
+        Lupa.setIcon(fondoJLupa);
+        ImageIcon J = new ImageIcon(getClass().getResource("/Vista/Imagenes/Line.png"));
+        Icon fondoJ = new ImageIcon(J.getImage().getScaledInstance(L1.getWidth(), L1.getHeight(), Image.SCALE_DEFAULT));
+        L1.setIcon(fondoJ);
+        ImageIcon k = new ImageIcon(getClass().getResource("/Vista/Imagenes/Line2.png"));
+        Icon fondok = new ImageIcon(k.getImage().getScaledInstance(L2.getWidth(), L2.getHeight(), Image.SCALE_DEFAULT));
+        L2.setIcon(fondok);
     }
-    private void cargarTabla(){
+
+    private void limpiar() {
+        this.txtAnimalSeleccionado.setText("");
+        this.txtBuscar.setText("");
+        this.txtCalcio.setText("");
+        this.txtEnergiaMetabolizable.setToolTipText("");
+        this.txtFosforo.setText("");
+        this.txtLisina.setText("");
+        this.txtPosicion.setText("");
+        this.txtProteinaC.setText("");
+        this.comboboxTipoAnimal.setSelectedIndex(0);
+    }
+
+    public void Botones(boolean sw) {
+        this.btnModificar.setEnabled(sw);
+        this.btnEliminar.setEnabled(sw);
+        this.txtEnergiaMetabolizable.setEnabled(sw);
+        this.comboboxTipoAnimal.setEnabled(sw);
+        this.txtProteinaC.setEnabled(sw);
+        this.txtCalcio.setEnabled(sw);
+        this.txtFosforo.setEnabled(sw);
+        this.txtLisina.setEnabled(sw);
+
+    }
+    /**
+     * Este metodo se usa para Cargar nuestra tabla con los datos de la lista selecionada
+     *
+     * @return void No retorna ningún valor.
+     */
+    private void cargarTabla() {
         modelo.setLista(control.getLista());
-        jtableAnimal.setModel(modelo);
-        jtableAnimal.updateUI();
+        tblAnimales.setModel(modelo);
+        tblAnimales.updateUI();
     }
-    private void cargarTablaBusqueda(){
+    /**
+     * Este metodo se usa para Cargar nuestra tabla con los datos resultantes de
+     * la busqueda.
+     *
+     * @return void No retorna ningún valor.
+     */
+    private void cargarTablaBusqueda() {
         modelo.setLista(control.getListabusqueda());
-        jtableAnimal.setModel(modelo);
-        jtableAnimal.updateUI();
+        tblAnimales.setModel(modelo);
+        tblAnimales.updateUI();
     }
-    
+
     public void Eliminar() {
-        var e = this.jtableAnimal.getSelectedRow();
-        control.getLista().eliminarPorPosicion(e);
-        control.eliminarContenidoArchivo();
-        control.InsertarArchivo();
-        control.CargarDatos();
-        cargarTabla();
+        if (!this.txtAnimalSeleccionado.getText().isEmpty()) {
+            if (this.tblAnimales.getRowCount() >= control.getLista().tamano()) {
+                control.getLista().eliminarPorPosicion(Integer.parseInt(txtPosicion.getText()));
+            } else {
+                control.getLista().eliminarPorPosicion(control.getListabusqueda().buscarDatoAlimento(control.getListabusqueda().verDatoPosicion(Integer.parseInt(txtPosicion.getText()))));
+            }
+            control.InsertarArchivo();
+            cargarTabla();
+            limpiar();
+            Botones(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,41 +130,94 @@ public class FrmAnimales extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnAtras = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        btnSeleccionar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        Lupa = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtableAnimal = new javax.swing.JTable();
+        tblAnimales = new javax.swing.JTable();
+        Descripcion = new javax.swing.JLabel();
+        txtAnimalSeleccionado = new javax.swing.JTextField();
+        btnModificar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtPosicion = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtLisina = new javax.swing.JTextField();
+        comboboxTipoAnimal = new javax.swing.JComboBox<>();
+        txtEnergiaMetabolizable = new javax.swing.JTextField();
+        txtProteinaC = new javax.swing.JTextField();
+        txtCalcio = new javax.swing.JTextField();
+        txtFosforo = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        L1 = new javax.swing.JLabel();
+        L2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tabla de Animales - Sistema de Formulacion de Raciones");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Acciones"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Acciones   ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 10), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setText("Modificar");
-
-        jButton3.setText("Eliminar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/delete.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Atras");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnAtras.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/shape_move_back.png"))); // NOI18N
+        btnAtras.setText("Atrás");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnAtrasActionPerformed(evt);
             }
         });
 
+        btnBuscar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/magnifier.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnSeleccionar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/cursor.png"))); // NOI18N
+        btnSeleccionar.setText("Seleccionar");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/cancel.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("AGregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -102,42 +226,59 @@ public class FrmAnimales extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(286, 286, 286)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addGap(18, 18, 18)
+                .addGap(79, 79, 79)
+                .addComponent(btnSeleccionar)
+                .addGap(40, 40, 40)
+                .addComponent(btnEliminar)
+                .addGap(40, 40, 40)
+                .addComponent(btnCancelar)
+                .addGap(40, 40, 40)
+                .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addComponent(btnBuscar)
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(btnBuscar))
+                    .addComponent(btnEliminar)
+                    .addComponent(btnAtras)
+                    .addComponent(btnBuscar)
+                    .addComponent(btnSeleccionar)
+                    .addComponent(btnCancelar)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar    ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 10), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Break", 1, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nombre:");
+
+        txtBuscar.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscar)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Lupa, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,9 +288,12 @@ public class FrmAnimales extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(Lupa, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jtableAnimal.setModel(new javax.swing.table.DefaultTableModel(
+        tblAnimales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
@@ -160,7 +304,94 @@ public class FrmAnimales extends javax.swing.JFrame {
                 "Descripcion", "Peso", "Consumo g/día", "Tipo", "Energía Metabolizable", "Proteina C.", "Fósforo", "Calcio", "Lisina"
             }
         ));
-        jScrollPane1.setViewportView(jtableAnimal);
+        jScrollPane1.setViewportView(tblAnimales);
+
+        Descripcion.setFont(new java.awt.Font("Break", 1, 16)); // NOI18N
+        Descripcion.setForeground(new java.awt.Color(255, 255, 255));
+        Descripcion.setText("Descripcion:");
+
+        txtAnimalSeleccionado.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtAnimalSeleccionado.setEnabled(false);
+
+        btnModificar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/table_edit.png"))); // NOI18N
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Break", 1, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Posicion:");
+
+        txtPosicion.setEnabled(false);
+
+        jLabel3.setFont(new java.awt.Font("Break", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Tipo de Animal:");
+
+        jLabel5.setFont(new java.awt.Font("Break", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Energia Metabolizable:");
+
+        jLabel6.setFont(new java.awt.Font("Break", 1, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Proteina C.: ");
+
+        jLabel7.setFont(new java.awt.Font("Break", 1, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Lisina:");
+
+        txtLisina.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtLisina.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLisinaKeyTyped(evt);
+            }
+        });
+
+        comboboxTipoAnimal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ave", "Cerdo", "Caballo", "Perro", "Gato", "Roedor", "Pez", "Otro" }));
+
+        txtEnergiaMetabolizable.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtEnergiaMetabolizable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEnergiaMetabolizableKeyTyped(evt);
+            }
+        });
+
+        txtProteinaC.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtProteinaC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtProteinaCKeyTyped(evt);
+            }
+        });
+
+        txtCalcio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtCalcio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCalcioKeyTyped(evt);
+            }
+        });
+
+        txtFosforo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtFosforo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFosforoKeyTyped(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Break", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Fosforo:");
+
+        jLabel8.setFont(new java.awt.Font("Break", 1, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Calcio:");
+
+        jLabel11.setFont(new java.awt.Font("Break", 1, 60)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText(" ANIMALES ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -169,22 +400,112 @@ public class FrmAnimales extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtCalcio, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(jLabel6)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(txtProteinaC))
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(txtEnergiaMetabolizable, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(Descripcion)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(txtAnimalSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addGap(141, 141, 141))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(350, 350, 350)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(comboboxTipoAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFosforo))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtLisina))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnModificar)))
+                        .addGap(28, 28, 28))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(L2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(L1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(L1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(L2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Descripcion)
+                    .addComponent(txtAnimalSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(comboboxTipoAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEnergiaMetabolizable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtProteinaC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtFosforo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCalcio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel7)
+                    .addComponent(txtLisina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnModificar)
+                .addContainerGap())
         );
+
+        jPanel2.getAccessibleContext().setAccessibleName("Acciones ");
+        jPanel2.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -194,23 +515,25 @@ public class FrmAnimales extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         var form = new FrmPrincipalA();
         form.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
-            if(txtBuscar.getText().isEmpty()){
+            if (txtBuscar.getText().isEmpty()) {
                 cargarTabla();
-            }else{
+            } else {
                 control.CargarDatosPorBusqueda(txtBuscar.getText());
                 cargarTablaBusqueda();
             }
@@ -218,12 +541,119 @@ public class FrmAnimales extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 //      control.eliminarContenidoArchivo();
 //      control.CargarDatos();
 //      cargarTabla();
-Eliminar();
-    }//GEN-LAST:event_jButton3ActionPerformed
+        Eliminar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+        int f = tblAnimales.getSelectedRow();
+        limpiar();
+        String dato = "";
+        String tipo = "";
+        if (tblAnimales.getRowCount() >= control.getLista().tamano()) {
+            dato += ((RegistroAnimal) control.getLista().obtenerPorPosicion(f)).getNombre() + "/";
+            dato += ((RegistroAnimal) control.getLista().obtenerPorPosicion(f)).getRaza() + "/";
+            dato += ((RegistroAnimal) control.getLista().obtenerPorPosicion(f)).getEtapa() + "/";
+            dato += ((RegistroAnimal) control.getLista().obtenerPorPosicion(f)).getProductoFinal() + "/";
+            dato += ((RegistroAnimal) control.getLista().obtenerPorPosicion(f)).getOrigen();
+            tipo = ((RegistroAnimal) control.getLista().obtenerPorPosicion(f)).getTipo();
+        } else {
+            dato += ((RegistroAnimal) control.getListabusqueda().obtenerPorPosicion(f)).getNombre() + "/";
+            dato += ((RegistroAnimal) control.getListabusqueda().obtenerPorPosicion(f)).getRaza() + "/";
+            dato += ((RegistroAnimal) control.getListabusqueda().obtenerPorPosicion(f)).getEtapa() + "/";
+            dato += ((RegistroAnimal) control.getListabusqueda().obtenerPorPosicion(f)).getProductoFinal() + "/";
+            dato += ((RegistroAnimal) control.getListabusqueda().obtenerPorPosicion(f)).getOrigen();
+            tipo = ((RegistroAnimal) control.getListabusqueda().obtenerPorPosicion(f)).getTipo();
+        }
+        txtAnimalSeleccionado.setText(dato);
+        txtPosicion.setText(String.valueOf(f));
+        this.comboboxTipoAnimal.setSelectedItem(tipo);
+        Botones(true);
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        if (!txtAnimalSeleccionado.getText().isEmpty()) {
+            if (tblAnimales.getRowCount() >= control.getLista().tamano()) {
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))).setTipo(comboboxTipoAnimal.getSelectedItem().toString());
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))).setEnergiaMetabolizable(Double.parseDouble(txtEnergiaMetabolizable.getText()));
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))).setFosforo(Double.parseDouble(txtFosforo.getText()));
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))).setProteinaC(Double.parseDouble(txtProteinaC.getText()));
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))).setCalcio(Double.parseDouble(txtCalcio.getText()));
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))).setLisina(Double.parseDouble(txtLisina.getText()));
+            } else {
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(control.getLista().buscarDatoAlimento(control.getListabusqueda().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))))).setTipo(comboboxTipoAnimal.getSelectedItem().toString());
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(control.getLista().buscarDatoAlimento(control.getListabusqueda().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))))).setEnergiaMetabolizable(Double.parseDouble(txtEnergiaMetabolizable.getText()));
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(control.getLista().buscarDatoAlimento(control.getListabusqueda().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))))).setFosforo(Double.parseDouble(txtFosforo.getText()));
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(control.getLista().buscarDatoAlimento(control.getListabusqueda().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))))).setProteinaC(Double.parseDouble(txtProteinaC.getText()));
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(control.getLista().buscarDatoAlimento(control.getListabusqueda().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))))).setCalcio(Double.parseDouble(txtCalcio.getText()));
+                ((RegistroAnimal) control.getLista().obtenerPorPosicion(control.getLista().buscarDatoAlimento(control.getListabusqueda().obtenerPorPosicion(Integer.parseInt(txtPosicion.getText()))))).setLisina(Double.parseDouble(txtLisina.getText()));
+            }
+            control.InsertarArchivo();
+            cargarTabla();
+            limpiar();
+            Botones(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiar();
+        Botones(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtEnergiaMetabolizableKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEnergiaMetabolizableKeyTyped
+        char e = evt.getKeyChar();
+        if (!(e < 'a' || e > 'z') && (e < 'A' || e > 'Z')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtEnergiaMetabolizableKeyTyped
+
+    private void txtProteinaCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProteinaCKeyTyped
+        char e = evt.getKeyChar();
+        if (!(e < 'a' || e > 'z') && (e < 'A' || e > 'Z')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtProteinaCKeyTyped
+
+    private void txtLisinaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLisinaKeyTyped
+        char e = evt.getKeyChar();
+        if (!(e < 'a' || e > 'z') && (e < 'A' || e > 'Z')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtLisinaKeyTyped
+
+    private void txtCalcioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCalcioKeyTyped
+        char e = evt.getKeyChar();
+        if (!(e < 'a' || e > 'z') && (e < 'A' || e > 'Z')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCalcioKeyTyped
+
+    private void txtFosforoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFosforoKeyTyped
+        char e = evt.getKeyChar();
+        if (!(e < 'a' || e > 'z') && (e < 'A' || e > 'Z')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtFosforoKeyTyped
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int f=tblAnimales.getSelectedRow();
+        controlRac.setRegistroAnimal((RegistroAnimal)control.getLista().verDatoPosicion(f));
+        controlRac.InsertarAnimalAlArchivo();
+        FrmRaciones frm = new FrmRaciones();
+        frm.dispose();
+        frm.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,7 +690,7 @@ Eliminar();
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -285,16 +715,39 @@ Eliminar();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Descripcion;
+    private javax.swing.JLabel L1;
+    private javax.swing.JLabel L2;
+    private javax.swing.JLabel Lupa;
+    private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnSeleccionar;
+    private javax.swing.JComboBox<String> comboboxTipoAnimal;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtableAnimal;
+    private javax.swing.JTable tblAnimales;
+    private javax.swing.JTextField txtAnimalSeleccionado;
     private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtCalcio;
+    private javax.swing.JTextField txtEnergiaMetabolizable;
+    private javax.swing.JTextField txtFosforo;
+    private javax.swing.JTextField txtLisina;
+    private javax.swing.JTextField txtPosicion;
+    private javax.swing.JTextField txtProteinaC;
     // End of variables declaration//GEN-END:variables
 }

@@ -27,10 +27,14 @@ public class FrmPrincipalA extends javax.swing.JFrame {
      */
     public FrmPrincipalA() {
         initComponents();
-        this.getContentPane().setBackground(Color.BLACK);
-        ImageIcon Bienvenido = new ImageIcon(getClass().getResource("/Imagenes/Imagen.jpg"));
-        Icon fondoBienvenido = new ImageIcon(Bienvenido.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
-        Imagen.setIcon(fondoBienvenido);
+        this.setLocationRelativeTo(null); 
+        this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+        this.setResizable(false);
+        this.getContentPane().setBackground(Color.DARK_GRAY);
+        jPanel1.setBackground(Color.DARK_GRAY);
+        ImageIcon Logo = new ImageIcon(getClass().getResource("/Vista/Imagenes/Logo3.png"));
+        Icon fondoLogo = new ImageIcon(Logo.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
+        Imagen.setIcon(fondoLogo);
     }
 
     /**
@@ -44,11 +48,11 @@ public class FrmPrincipalA extends javax.swing.JFrame {
 
         jMenu3 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         btnTAlimentos = new javax.swing.JButton();
         btnTAlnimales = new javax.swing.JButton();
         btnTlRaciones = new javax.swing.JButton();
         btnTUsuarios = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         Imagen = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -64,10 +68,7 @@ public class FrmPrincipalA extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulario Principal - Sistema de Formulación de Raciones");
 
-        jLabel2.setFont(new java.awt.Font("Trajan Pro", 1, 37)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel2.setText("Sistema De Fomulación de Raciones");
-
+        btnTAlimentos.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         btnTAlimentos.setText("Tabla de Alimentos");
         btnTAlimentos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 2));
         btnTAlimentos.addActionListener(new java.awt.event.ActionListener() {
@@ -76,6 +77,7 @@ public class FrmPrincipalA extends javax.swing.JFrame {
             }
         });
 
+        btnTAlnimales.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         btnTAlnimales.setText("Tabla de Animales");
         btnTAlnimales.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 2));
         btnTAlnimales.addActionListener(new java.awt.event.ActionListener() {
@@ -84,6 +86,7 @@ public class FrmPrincipalA extends javax.swing.JFrame {
             }
         });
 
+        btnTlRaciones.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         btnTlRaciones.setText("Análisis de Raciones");
         btnTlRaciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 2));
         btnTlRaciones.addActionListener(new java.awt.event.ActionListener() {
@@ -92,6 +95,7 @@ public class FrmPrincipalA extends javax.swing.JFrame {
             }
         });
 
+        btnTUsuarios.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         btnTUsuarios.setText("Tabla de Usuarios");
         btnTUsuarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 2));
         btnTUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -100,46 +104,51 @@ public class FrmPrincipalA extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Break", 1, 60)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("SISTEMA  DE  FORMULACION  DE  RACIONES");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Imagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(208, 208, 208))
+                .addComponent(btnTAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(btnTAlnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(btnTlRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(btnTUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(226, 226, 226))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel2)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnTAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(btnTAlnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(btnTlRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel2)
-                .addGap(35, 35, 35)
-                .addComponent(Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnTAlnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTlRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnTAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTlRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Opciones");
+        jMenu1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
+        btnCerrarSesion.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnCerrarSesion.setText("Cerrar sesión");
         btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,6 +157,7 @@ public class FrmPrincipalA extends javax.swing.JFrame {
         });
         jMenu1.add(btnCerrarSesion);
 
+        btnSalir.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,7 +169,9 @@ public class FrmPrincipalA extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Registrar");
+        jMenu2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
+        btnRegistrarAnimal.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnRegistrarAnimal.setText("Animal");
         btnRegistrarAnimal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,6 +180,7 @@ public class FrmPrincipalA extends javax.swing.JFrame {
         });
         jMenu2.add(btnRegistrarAnimal);
 
+        btnRegistrarAlimento.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnRegistrarAlimento.setText("Alimento");
         btnRegistrarAlimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,6 +189,7 @@ public class FrmPrincipalA extends javax.swing.JFrame {
         });
         jMenu2.add(btnRegistrarAlimento);
 
+        btnRegistrarUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnRegistrarUsuario.setText("Usuario");
         btnRegistrarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

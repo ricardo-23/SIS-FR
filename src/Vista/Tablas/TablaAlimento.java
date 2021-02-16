@@ -54,14 +54,14 @@ public class TablaAlimento extends AbstractTableModel  {
     @Override
     public String getColumnName(int column) {
         switch(column){
-            case 0: return "Descripcion";
+            case 0: return "Descripción";
             case 1: return "Tipo de Alimento";
-            case 2: return "Costo por Kg.";
-            case 3: return "Energia Metabolizable";
-            case 4: return "ProteinaC";
+            case 2: return "Costo por Kg";
+            case 3: return "Energía Metabolizable";
+            case 4: return "Proteína C";
             case 5: return "Calcio";
             case 6: return "Lisina";
-            case 7: return "Fosforo";
+            case 7: return "Fósforo";
             default: return null;
         }
     }       

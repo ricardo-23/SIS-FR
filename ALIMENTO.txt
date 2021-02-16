@@ -1,2 +1,5 @@
-a,a,a,a,a,vegetal,Energético,1.0,1.0,1.0,1.0,1.0,1.0
+e,e,e,e,e,vegetal,Proteico,7.0,7.0,7.0,7.0,77.0,7.0
+c,c,c,c,c,vegetal,Energético,6.0,6.0,6.0,6.0,6.0,6.0
+a,a,a,a,a,vegetal,Mineral,1.0,1.0,1.0,1.0,1.0,1.0
+d,d,d,d,d,vegetal,Aditivo,10.0,10.0,10.0,10.0,10.0,10.0
 
